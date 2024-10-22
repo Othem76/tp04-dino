@@ -27,6 +27,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Set up Git user
+        run: |
+          git config --global user.name "Othem76"
+          git config --global user.email "t.mouisse@gmail.com"
+
       - name: Deploy
         run: npm run deploy
         env:
