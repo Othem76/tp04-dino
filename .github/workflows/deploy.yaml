@@ -19,6 +19,6 @@ jobs:
 
     steps:
       - name: Build before deploy
-        run: npm run predeploy
-      - name: Deploy to production
-        run: npm run deploy
+        run: npm run build && gh-pages -d build
+      #- name: Deploy to production
+      #  run: npm run deploy
