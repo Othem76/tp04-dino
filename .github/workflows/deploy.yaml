@@ -1,27 +1,35 @@
-name: Deploy Workflow
+name: Deploy to GitHub Pages
+
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 
 jobs:
   deploy:
     permissions:
-      contents: read
+      contents: write
       pages: write
       id-token: write
-
     runs-on: ubuntu-latest
 
     steps:
-      - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v32
-      - name: Build before deploy
-        run: npm run predeploy
-      - name: Deploy to production
-        run: npm run deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
