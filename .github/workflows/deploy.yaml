@@ -17,9 +17,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        #with:
-        #  persist-credentials: false
-        #  fetch-depth: 0
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -30,10 +30,10 @@ jobs:
       - name: Build
         run: npm run build
 
-      #- name: Set up Git user
-      #  run: |
-      #    git config --global user.name "Othem76"
-      #    git config --global user.email "t.mouisse@gmail.com"
+      - name: Set up Git user
+        run: |
+          git config --global user.name "Othem76"
+          git config --global user.email "t.mouisse@gmail.com"
 
       - name: Deploy
         run: npm run deploy
