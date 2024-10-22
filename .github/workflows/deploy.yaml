@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Build before deploy
-        working-directory: "../../"
-        run: echo pwd && npm run build && gh-pages -d build
+        working-directory: "../"
+        run: pwd && npm run build && gh-pages -d build
       #- name: Deploy to production
       #  run: npm run deploy
