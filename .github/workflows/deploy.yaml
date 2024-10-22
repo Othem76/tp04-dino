@@ -1,44 +1,35 @@
-name: Deploy Workflow
+name: Deploy to GitHub Pages
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
 jobs:
   deploy:
     permissions:
-      contents: read
+      contents: write
       pages: write
       id-token: write
-
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 14
+
       - name: Install dependencies
         run: npm install
+
       - name: Build
         run: npm run build
 
-      - name: Set up Git user
-        run: |
-          git config --global user.name "Othem76"
-          git config --global user.email "t.mouisse@gmail.com"
-
-      - name: Deploy
-        run: npm run deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      #- name: Deploy to production
-      #  run: npm run deploy
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
